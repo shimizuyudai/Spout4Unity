@@ -56,12 +56,12 @@ namespace Spout{
 		private GCHandle handleSenderStarted;
 		private GCHandle handleSenderStopped;
 
-		#if UNITY_EDITOR
-		//To get a reference to the GameView
-		private static System.Reflection.Assembly assembly;
-		private static System.Type gameviewType;
-		private static UnityEditor.EditorWindow gameview;
-		#endif
+		//#if UNITY_EDITOR
+		////To get a reference to the GameView
+		//private static System.Reflection.Assembly assembly;
+		//private static System.Type gameviewType;
+		//private static UnityEditor.EditorWindow gameview;
+		//#endif
 
 		#pragma warning disable 414
 		[SerializeField]
@@ -104,7 +104,7 @@ namespace Spout{
 						GameObject _go = new GameObject("Spout");			
 						_instance = _go.AddComponent<Spout>();
 					}
-					DontDestroyOnLoad(_instance.gameObject);
+					//DontDestroyOnLoad(_instance.gameObject);
 				}
 				
 				return _instance;
@@ -157,11 +157,11 @@ namespace Spout{
 			activeLocalSenders = new List<TextureInfo>();
 			localSenderNames = new HashSet<string>();
 			
-			#if UNITY_EDITOR
-			assembly = typeof(UnityEditor.EditorWindow).Assembly;
-			gameviewType = assembly.GetType( "UnityEditor.GameView" );
-			gameview = UnityEditor.EditorWindow.GetWindow(gameviewType);
-			#endif
+			//#if UNITY_EDITOR
+			//assembly = typeof(UnityEditor.EditorWindow).Assembly;
+			//gameviewType = assembly.GetType( "UnityEditor.GameView" );
+			//gameview = UnityEditor.EditorWindow.GetWindow(gameviewType);
+			//#endif
 
 
 #if UNITY_EDITOR
@@ -177,13 +177,13 @@ namespace Spout{
 
 		private void _Enable(){
 			//Debug.Log("Spout._Enable");
-			#if UNITY_EDITOR
+			//#if UNITY_EDITOR
 			
-			if(!Application.isPlaying){
-				UnityEditor.EditorApplication.update -= _Update;
-				UnityEditor.EditorApplication.update += _Update;
-			}
-			#endif
+			//if(!Application.isPlaying){
+			//	UnityEditor.EditorApplication.update -= _Update;
+			//	UnityEditor.EditorApplication.update += _Update;
+			//}
+			//#endif
 			
 			
 			_Init();
@@ -219,14 +219,14 @@ namespace Spout{
 		private void _Update()
 		{	
 
-			#if UNITY_EDITOR
-			_frameCounter++;
-			_frameCounter %= _editorUpdateFrameInterval;
-			if(_frameCounter == 0){
-				UnityEditor.SceneView.RepaintAll();
-				gameview.Repaint();
-			}
-			#endif
+			//#if UNITY_EDITOR
+			//_frameCounter++;
+			//_frameCounter %= _editorUpdateFrameInterval;
+			//if(_frameCounter == 0){
+			//	UnityEditor.SceneView.RepaintAll();
+			//	gameview.Repaint();
+			//}
+			//#endif
 
 			if(isReceiving){
 				//Debug.Log("checkReceivers");
@@ -267,9 +267,9 @@ namespace Spout{
 			//Debug.Log("Spout.OnDisable");
 			if(_instance != this)return;
 
-			#if UNITY_EDITOR
-			UnityEditor.EditorApplication.update -= _Update;
-			#endif
+			//#if UNITY_EDITOR
+			//UnityEditor.EditorApplication.update -= _Update;
+			//#endif
 
 			StopAllLocalSenders();
 			//Force the Plugin to check. Otherwise we don't get a SenderStopped delegate call

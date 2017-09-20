@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Projector/Light" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -32,7 +34,7 @@ Shader "Projector/Light" {
 			v2f vert (float4 vertex : POSITION)
 			{
 				v2f o;
-				o.pos = mul (UNITY_MATRIX_MVP, vertex);
+				o.pos = UnityObjectToClipPos (vertex);
 				o.uvShadow = mul (unity_Projector, vertex);
 				o.uvFalloff = mul (unity_ProjectorClip, vertex);
 				UNITY_TRANSFER_FOG(o,o.pos);
